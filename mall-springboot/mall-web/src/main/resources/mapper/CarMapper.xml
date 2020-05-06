@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+      <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+      <mapper namespace="com.example.mall.dao.CarMapper" >
+
+    <resultMap id="BaseResultMap" type="carDO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId"></result>
+        <result column="product_id" property="productId"></result>
+    </resultMap>
+
+    <resultMap id="VOBaseResultMap" type="carVO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId"></result>
+        <result column="product_id" property="productId"></result>
+
+        <result column="title" property="title"></result>
+        <result column="sort" property="sort"></result>
+        <result column="des" property="des"></result>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="collect_num" property="collectNum"></result>
+        <result column="create_time" property="createTime"></result>
+
+        <result column="phone" property="phone"></result>
+    </resultMap>
+
+    <select id="findCarList" parameterType="carVO" resultMap="VOBaseResultMap">
+        select c.*,
+          p.*,
+          p.user_id productUserId,
+		  u.*
+        from car c join product p on c.product_id = p.id join sys_user u on c.user_id = u.id
+        where c.user_id = #{userId}
+    </select>
+</mapper>

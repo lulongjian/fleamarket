@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mall.dao.AddressMapper">
+
+    <resultMap id="BaseResultMap" type="addressDO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="user_phone" property="userPhone"></result>
+        <result column="addr" property="addr"></result>
+    </resultMap>
+</mapper>

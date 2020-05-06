@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mall.dao.AccountRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.mall.domain.vo.AccountRecordVO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="seller_id" property="sellerId"></result>
+        <result column="seller_name" property="sellerName"></result>
+        <result column="category" property="category"></result>
+        <result column="money" property="money"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <select id="getAccountRecord" parameterType="com.example.mall.domain.form.AccountRecordForm" resultMap="BaseResultMap">
+      select
+       *
+      from account_record
+      <trim prefix="where" prefixOverrides="and|or">
+          <if test="userName != null and userName != ''">
+            and user_name like "%"#{userName}"%"
+          </if>
+          <if test="category1 != null and category1 != '' and category2 != null and category2 != ''">
+              and category = #{category1} or category = #{category2}
+          </if>
+      </trim>
+    </select>
+</mapper>

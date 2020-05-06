@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+      <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+      <mapper namespace="com.example.mall.dao.OrderMapper" >
+    <resultMap id="BaseResultMap" type="orderDO">
+        <id column="id" property="id" />
+        <result column="product_id" property="productId"></result>
+        <result column="product_title" property="productTitle"></result>
+        <result column="product_price" property="productPrice"></result>
+        <result column="order_no" property="orderNo"></result>
+        <result column="buyer_id" property="buyerId"></result>
+        <result column="buyer_name" property="buyerName"></result>
+        <result column="seller_id" property="sellerId"></result>
+        <result column="seller_name" property="sellerName"></result>
+        <result column="status" property="status"></result>
+        <result column="address_id" property="addressId"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <resultMap id="OrderVOResultMap" type="orderVO">
+        <id column="id" property="id" />
+        <result column="product_id" property="productId"></result>
+        <result column="product_title" property="productTitle"></result>
+        <result column="product_price" property="productPrice"></result>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="order_no" property="orderNo"></result>
+        <result column="buyer_id" property="buyerId"></result>
+        <result column="buyer_name" property="buyerName"></result>
+        <result column="buyer_phone" property="buyerPhone"></result>
+        <result column="buyer_user_name" property="buyerUserName"></result>
+        <result column="buyer_user_phone" property="buyerUserPhone"></result>
+        <result column="seller_id" property="sellerId"></result>
+        <result column="seller_name" property="sellerName"></result>
+        <result column="seller_phone" property="sellerPhone"></result>
+        <result column="status" property="status"></result>
+        <result column="address_id" property="addressId"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <select id="findBuyOrderByForm" parameterType="orderForm" resultMap="OrderVOResultMap">
+        SELECT
+            od.*,
+            pd.title product_title,
+            pd.img_url,
+            pd.status productStatus,
+            u.phone as seller_phone,
+            ar.user_name buyer_user_name,
+            ar.user_phone buyer_user_phone
+        FROM
+            `user_order` od,
+            product pd,
+            address ar,
+            `sys_user` u
+        WHERE
+            od.product_id = pd.id
+        AND od.address_id = ar.id
+        AND od.seller_id = u.id
+        AND od.buyer_id = #{userId}
+    </select>
+
+    <select id="findSellerOrderByForm" parameterType="orderForm" resultMap="OrderVOResultMap">
+        SELECT
+            od.*,
+            pd.title productTitle,
+            pd.img_url,
+            pd.status productStatus,
+            u.phone as buyer_phone,
+            ar.user_name buyer_user_name,
+            ar.user_phone buyer_user_phone
+        FROM
+            `user_order` od,
+            product pd,
+            address ar,
+            `sys_user` u
+        WHERE
+            od.product_id = pd.id
+        AND od.address_id = ar.id
+        AND od.buyer_id = u.id
+        AND od.seller_id = #{userId}
+    </select>
+
+    <!--<select id="getUserOrderCountByUserId" parameterType="int">-->
+      <!--SELECT-->
+            <!--COUNT(id)-->
+        <!--FROM-->
+            <!--`order`-->
+        <!--WHERE-->
+            <!--STATUS = '1'-->
+        <!--OR STATUS = '2'-->
+        <!--where buyer_id = #{userId} or seller_id = #{userId}-->
+    <!--</select>-->
+    <insert id="addOrder" parameterType="orderDO">
+      insert into `user_order`
+      ( product_id,product_title,product_price,order_no,buyer_id,buyer_name,seller_id,seller_name,status,address_id,create_time,update_time )
+      values
+      (#{productId}, #{productTitle}, #{productPrice}, #{orderNo}, #{buyerId},#{buyerName}, #{sellerId}, #{sellerName}, #{status}, #{addressId}, #{createTime}, #{updateTime})
+    </insert>
+
+    <select id="getOrder" parameterType="orderForm" resultMap="OrderVOResultMap">
+        SELECT
+            od.*,
+            pd.img_url,
+            pd.status productStatus,
+            u.phone as seller_phone,
+            ar.user_name buyer_user_name,
+            ar.user_phone buyer_user_phone
+        FROM
+            `user_order` od,
+            product pd,
+            address ar,
+            `sys_user` u
+        WHERE
+            od.product_id = pd.id
+        AND od.address_id = ar.id
+        AND od.seller_id = u.id
+        <if test="name != null and name != ''">
+          AND (od.seller_name like "%"#{name}"%" OR od.buyer_name like "%"#{name}"%")
+        </if>
+        <if test="status != null and status != '' and status != '2'">
+           and od.status = #{status}
+        </if>
+        <if test="status == '2'">
+            and od.status != '3'
+        </if>
+    </select>
+</mapper>

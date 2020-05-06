@@ -1,0 +1,46 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+    session:
+      timeout: 3600
+spring:
+#  热部署
+  devtools:
+    restart:
+      enabled: true
+#      页面不加载缓存，修改即时生效
+  freemarker:
+    cache: false
+
+#    配置RabbitMQ
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 8843
+#    username: springbootMQ
+#    password: 123456
+
+  datasource:
+    url: jdbc:mysql://112.74.113.75:3306/fleamarket?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+  resources:
+    static-locations: classpath:/static/
+  mvc:
+      static-path-pattern: /static/**
+      hiddenmethod:
+        filter:
+          enabled: true
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.example.mall.domain; com.example.mall.vo; com.example.mall.form

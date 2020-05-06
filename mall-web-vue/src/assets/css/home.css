@@ -1,0 +1,182 @@
+#Home {
+	width: 100%;
+}
+
+.HomeBd {
+	width: 1200px;
+	margin: 0 auto;
+	position: relative;
+}
+.HomeBd>.left ul {
+	margin: 40px 0;
+}
+
+
+.HomeBd .pipe {
+	background: #dfdfdf;
+  width: 1px;
+  height: 36px;
+	display: inline-block;
+	margin-top: 5px;
+}
+
+.q322{
+	display: inline-block;
+}
+.q322>img {
+	width: 150px;
+}
+.leftBd{
+	margin: 42px 0;
+}
+
+.px322 {
+	font-size: 40px;
+	color: #4DA5FF;
+	height: 36px;
+	line-height: 36px;
+	display: inline-block;
+}
+
+.HomeBd .manifesto{
+	display: inline-block;
+}
+
+.manifesto>p:first-of-type {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.manifesto>p:last-of-type {
+	font-size: 14px;
+	font-weight: 400;
+	color: #333333;
+}
+
+.HomeBd .rightBd>div {
+	display: inline-block;
+}
+
+#input {
+	position: absolute;
+	right: 240px;
+	top: 45px;
+	font-size: 18px;
+	border-radius: 5px;
+}
+
+.inputBd {
+	width: 510px;
+	height: 40px;
+	border: 2px solid #4DA5FF;
+	border-right: none;
+}
+
+.HomeBd #input {
+	background-color: #ffffff;
+}
+
+.inputBd>input {
+	width: 50%;
+	height: 100%;
+	border: none;
+	font-size: 18px;
+	outline: none;
+	-webkit-appearance: none;
+	padding-left: 10px;
+}
+
+.inputBd {
+	transition: all 1s;
+	vertical-align: middle;
+}
+
+.inputBd:hover {
+	border: 2px solid #919191;
+	border-right: none;
+}
+
+#search {
+	height: 44px;
+	width: 66px;
+	margin-right: -3px;
+	vertical-align: middle;
+}
+
+.searchBtn:hover {
+	background-color: #0DA5DD;
+}
+
+.searchBtn {
+	height: 100%;
+	width: 100%;
+	border: 1px solid transparent;
+	outline: none;
+	background-color: #4DA5FF;
+	color: #ffffff;
+}
+
+.HomeBd #input>div, #release>div {
+	display: inline-block;
+}
+#release {
+	height: 50px;
+	margin: 37px 0;
+	position: relative;
+}
+
+.releaseBd {
+	display: inline-block;
+	position: absolute;
+	right: 150px;
+	width: 160px;
+	right: 0;
+	top: 10px;
+	cursor: pointer;
+}
+
+.releaseBd>.circle {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 50%;
+	text-align: center;
+	border:2px solid #4DA5FF;
+	margin-right: 5px;
+}
+
+.releaseBd div {
+	display: inline-block;
+}
+
+.reisin {
+	text-align: left;
+	position: absolute;
+	width: 150px;
+	top: 0px;
+}
+.reisin>p:first-of-type {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.reisin>p:last-of-type {
+	font-size: 13px;
+	font-weight: 400;
+}
+
+#sell {
+	font-size: 18px;
+	font-weight: 700;
+	color: #4DA5FF;
+}
+
+
+#Home h3 {
+	margin: 20px 0;
+	text-align: center;
+	/* color: rgba(111,255,10,0.8); */
+	color: #0DA5DD;
+}
+

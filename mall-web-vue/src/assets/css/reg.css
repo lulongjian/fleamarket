@@ -1,0 +1,123 @@
+.Reg {
+	width: 730px;
+	margin: 0 auto;
+	background:rgba(255,255,255,1);
+	box-shadow:0px 5px 25px 0px rgba(221,221,221,1);
+	border-radius:5px;
+}
+.Reg1 {
+  /*width: 730px;*/
+  margin: 0 auto;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 5px 25px 0px rgba(221,221,221,1);
+  border-radius:5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+{
+	-webkit-appearance: none;
+}
+
+
+h2{
+	font-size:24px;
+	font-family:Microsoft YaHei;
+	font-weight:400;
+	color:rgba(51,51,51,1);
+	text-align: center;
+	margin-top: 35px;
+	margin-bottom: 33px;
+}
+
+.RegBd{
+	width: 400px;
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 24px;
+	padding-bottom: 35px;
+}
+
+.RegBd>div>input{
+	width:370px;
+	height:60px;
+	border:1px solid rgba(210,210,210,1);
+	border-radius:5px;
+	font-size:18px;
+	color: #000;
+	padding-left: 30px;
+	margin: 0 auto;
+}
+
+.RegBd>div>#button {
+	width:400px;
+	height:60px;
+	background:rgba(77,165,255,1);
+	border-radius:5px;
+	font-size:18px;
+	font-family:Microsoft YaHei;
+	font-weight:400;
+	color:rgba(255,255,255,1);
+	border: none;
+}
+
+.RegBd>div {
+	margin-bottom: 17px;
+}
+
+.RegBd input{
+	width: 400px;
+	height: 50px;
+	border:1px solid rgba(210,210,210,1);
+	border-radius:5px;
+}
+
+.RegBd>#verify {
+	width: 400px;
+	/* border:1px solid rgba(210,210,210,1); */
+	border-radius:5px;
+	position: relative;
+}
+
+.RegBd>#verify>.verify {
+	width: 71%;
+	height: 59px;
+	border-radius:5px;
+	/* border: none; */
+	border-right-color: #fff;
+	padding-left: 26px;
+	position: absolute;
+	left: 0;
+	top: 20;
+}
+
+.RegBd>#verify>div {
+	position: absolute;
+	display: inline-block;
+	outline-style: none;
+	font-size:16px;
+	line-height: 35px;
+	font-family:Microsoft YaHei;
+	font-weight:400;
+	color:rgba(77,165,255,1);
+	width: 21%;
+	background-color: #fff;
+    border: none;
+	/* border-left: 1px solid rgba(210,210,210,1); */
+	top: 15px;
+	right: 3px;
+	cursor: pointer;
+}
+
+.oo {
+	color: red;
+	line-height: 16px;
+	height: 16px;
+	font-size: 16px;
+	text-align: left;
+	padding-left: 30px;
+}
+
+.reg {
+	color: rgba(77,165,255,1);
+}

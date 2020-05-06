@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+      <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+      <mapper namespace="com.example.mall.dao.ProductMapper" >
+
+
+    <resultMap id="BaseResultMap" type="productDO">
+        <id column="id" property="id" />
+        <result column="permission" property="permission"></result>
+        <result column="title" property="title"></result>
+        <result column="sort" property="sort"></result>
+        <result column="des" property="des"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="collect_num" property="collectNum"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <resultMap id="VOBaseResultMap" type="productVO">
+        <id column="id" property="id" />
+        <result column="permission" property="permission"></result>
+        <result column="title" property="title"></result>
+        <result column="sort" property="sort"></result>
+        <result column="des" property="des"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="collect_num" property="collectNum"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+
+        <result column="name" property="name"></result>
+        <result column="phone" property="phone"></result>
+    </resultMap>
+
+    <select id="findProduct" parameterType="productForm" resultMap="VOBaseResultMap">
+        select p.*,
+          u.name name,
+          u.phone phone
+        from product p join sys_user u on (p.user_id = u.id)
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="productId != null and productId !=''">
+                and p.productId = #{productId}
+            </if>
+            <if test="permission == null">
+                and p.permission = '1'
+                and p.status = '1'
+            </if>
+            <if test="title != null and title !=''">
+                and p.title like "%"#{title}"%"
+            </if>
+            <if test="sort != null and sort !=''">
+                and p.sort like "%"#{sort}"%"
+            </if>
+        </trim>
+        <if test="order != null and order !='' and order == 'moneyHight'">
+            order by p.price desc
+        </if>
+        <if test="order != null and order !='' and order == 'moneyLow'">
+            order by p.price asc
+        </if>
+        <if test="order != null and order !='' and order == 'collectNum'">
+            order by p.collect_num desc
+        </if>
+        <if test="order != null and order !='' and order == 'time'">
+            order by p.create_time desc
+        </if>
+    </select>
+
+    <!--管理员查找商品页面-->
+    <select id="getProduct" parameterType="productForm" resultMap="VOBaseResultMap">
+        select p.*,
+        u.sno sno,
+        u.name name,
+        u.phone phone
+        from product p join sys_user u on (p.user_id = u.id)
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="productId != null and productId !=''">
+                and p.productId = #{productId}
+            </if>
+            <if test="permission != null and permission !=''">
+                and p.permission = #{permission}
+            </if>
+            <if test="status != null and status !=''">
+                and p.status = #{status}
+            </if>
+            <if test="title != null and title !=''">
+                and p.title like "%"#{title}"%"
+            </if>
+            <if test="sort != null and sort !=''">
+                and p.sort like "%"#{sort}"%"
+            </if>
+        </trim>
+        <if test="order != null and order !='' and order == 'moneyHight'">
+            order by p.price desc
+        </if>
+        <if test="order != null and order !='' and order == 'moneyLow'">
+            order by p.price asc
+        </if>
+        <if test="order != null and order !='' and order == 'collectNum'">
+            order by p.collect_num desc
+        </if>
+        <if test="order != null and order !='' and order == 'time'">
+            order by p.create_time desc
+        </if>
+    </select>
+
+    <select id="findProductById" parameterType="productForm" resultMap="VOBaseResultMap">
+        select p.*,
+        u.name name,
+        u.phone phone
+        from product p join sys_user u on (p.user_id = u.id)
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="productId != null and productId !=''">
+                and p.id = #{productId}
+            </if>
+        </trim>
+    </select>
+</mapper>

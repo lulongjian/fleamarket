@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+      <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+      <mapper namespace="com.example.mall.dao.UserMapper" >
+    <resultMap id="BaseResultMap" type="userDO">
+        <id column="id" property="id"/>
+        <result column="sno" property="sno"></result>
+        <result column="role" property="role"></result>
+        <result column="permission" property="permission"></result>
+        <result column="name" property="name"></result>
+        <result column="password" property="password"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <resultMap id="UserVOResultMap" type="userVO">
+        <id column="id" property="id"/>
+        <result column="sno" property="sno"></result>
+        <result column="role" property="role"></result>
+        <result column="permission" property="permission"></result>
+        <result column="name" property="name"></result>
+        <result column="password" property="password"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="address" property="address"></result>
+    </resultMap>
+
+    <select id="getUser" parameterType="userForm" resultMap="UserVOResultMap">
+        SELECT
+            u.*
+        FROM
+            sys_user u
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="nameOrSno != null and nameOrSno != ''">
+                and u.name like "%"#{nameOrSno}"%" or u.sno like "%"#{nameOrSno}"%"
+            </if>
+            <if test="permission == null or permission == ''">
+                and u.permission != #{deletePermission}
+            </if>
+            <if test="currentUserId != null and currentUserId != ''">
+                and u.id != #{currentUserId}
+            </if>
+            <if test="permission != null and permission != ''">
+                and u.permission = #{permission}
+            </if>
+        </trim>
+        ORDER BY
+            u.create_time DESC
+    </select>
+</mapper>
