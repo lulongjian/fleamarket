@@ -77,6 +77,7 @@
     name: 'Login',
     data() {
       return {
+        baseHttp: "http://127.0.0.1:8843",
         userName: '',
         passWord: '',
         centerDialogVisible1: false,
@@ -100,7 +101,7 @@
       },
       reggo() {
         this.$http
-          .post('http://112.74.113.75:8843/user/updatePassword',{
+          .post(this.baseHttp+'/user/updatePassword',{
             code: this.code,
             email: this.email,
             passWord: this.getRsaCode(this.passWord)
@@ -138,7 +139,7 @@
             email: this.email
           };
           this.$http
-            .post('http://112.74.113.75:8843/sys/getCodeUpdatePassword', prom)
+            .post(this.baseHttp+'/sys/getCodeUpdatePassword', prom)
             .then(response => {
               if(response.data.code==0){
                 this.$message.success(response.data.msg);
@@ -165,7 +166,7 @@
           passWord: this.getRsaCode(this.passWord),
         };
         this.$http
-          .post('http://112.74.113.75:8843/sys/login', prom)
+          .post(this.baseHttp+'/sys/login', prom)
           .then(response => {
             if (response.data.code != 0) {
               this.$message.error(response.data.msg);

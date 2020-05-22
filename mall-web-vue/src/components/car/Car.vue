@@ -304,6 +304,7 @@
     name: 'Car',
     data() {
       return {
+        baseHttp: "http://127.0.0.1:8843",
         account:[],
         payVisible: false,
         addr: [],
@@ -323,7 +324,6 @@
         datas:{},
         car: [],
         tel:'',
-        http: "http://112.74.113.75:8843",
         collectSwitchCount: 2,
         total: 0,
         currentPage: 1,
@@ -335,14 +335,10 @@
     methods: {
       mopen(id,userId,count){
         this.$http
-          .get('https://fleamarket.fun:8843/user/selectById?id='+userId)
+          .get(this.baseHttp+'/user/selectById?id='+userId)
           .then(response=>{
             this.tel=response.data.data.tel
           });
-        this.$http
-          .put('https://fleamarket.fun:8843/product/update?id='+id+'&count='+(count+1))
-          .then(response=>{
-          })
       },
       dk(item){
         this.drawer = true
@@ -365,7 +361,7 @@
           type: 'warning'
         }).then(() => {
            this.$http
-            .post('http://112.74.113.75:8843/car/delete',{
+            .post(this.baseHttp+'/car/delete',{
                id:id
             })
             .then(response=>{
@@ -375,7 +371,7 @@
                   userId: sessionStorage.getItem("userId")
                 }
                 request({
-                  url: 'http://112.74.113.75:8843/car/carList',
+                  url: this.baseHttp+'/car/carList',
                   method: 'post',
                   data: pagehomt
                   }).then(res => {
@@ -411,7 +407,7 @@
           /**
            * 获取商品列表，点进购物车时查询该连接
            */
-            .post('http://112.74.113.75:8843/car/carList', {
+            .post(this.baseHttp+'/car/carList', {
               page: this.currentPage,
               number: this.pagesize,
               userId: sessionStorage.getItem("userId")
@@ -435,7 +431,7 @@
         }
         //查询地址
         this.$http
-          .post('http://112.74.113.75:8843/address/list', {
+          .post(this.baseHttp+'/address/list', {
             page: 1,
             number: 10000,
             userId: sessionStorage.getItem("userId")
@@ -458,7 +454,7 @@
         }
         //判断商品是否购买
         this.$http
-          .post('http://112.74.113.75:8843/product/findProductById', {
+          .post(this.baseHttp+'/product/findProductById', {
             id: orderMsg.productId,
             addressId: addressId
           })
@@ -478,7 +474,7 @@
       //付款
       payFor(price){
         this.$http
-          .post('http://112.74.113.75:8843/account/addAccountByUserId', {
+          .post(this.baseHttp+'/account/addAccountByUserId', {
             userId: sessionStorage.getItem("userId"),
             money: price,
             type: '0',
@@ -493,7 +489,7 @@
               }, 1.5 * 1000) 
               //生成订单
               this.$http
-                .post('http://112.74.113.75:8843/order/addOrder', {
+                .post(this.baseHttp+'/order/addOrder', {
                   productId: this.orderMsg.productId,
                   productTitle: this.orderMsg.title,
                   productPrice: this.orderMsg.price,
@@ -540,7 +536,7 @@
       UpdateAddress(){
         this.updateAddressDialogVisible = true;
         this.$http
-          .post('http://112.74.113.75:8843/address/addOrUpdateAddressById',{
+          .post(this.baseHttp+'/address/addOrUpdateAddressById',{
             id: this.addr.id,
             userName: this.addr.userName,
             userPhone: this.addr.userPhone,
@@ -552,7 +548,7 @@
             this.updateAddressDialogVisible = false;
             //刷新我的地址
             this.$http
-            .post('http://112.74.113.75:8843/address/list', {
+            .post(this.baseHttp+'/address/list', {
               page: 1,
               number: 10000,
               userId: sessionStorage.getItem("userId")
@@ -568,7 +564,7 @@
       },
       myAccount(){
         this.$http
-          .post('http://112.74.113.75:8843/account/myAccount', {
+          .post(this.baseHttp+'/account/myAccount', {
             page: 1,
             number: 10000,
             userId: sessionStorage.getItem("userId")

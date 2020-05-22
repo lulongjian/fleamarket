@@ -55,6 +55,7 @@
     name: 'Register',
     data() {
       return {
+        baseHttp: "http://127.0.0.1:8843",
         name: '',
         sno: '',
         code: '',
@@ -128,7 +129,7 @@
             email: this.email
           };
           this.$http
-            .post('http://112.74.113.75:8843/sys/getCode', prom)
+            .post(this.baseHttp+'/sys/getCode', prom)
             .then(response => {
               if(response.data.code==0){
                 this.$message.success(response.data.msg);
@@ -160,7 +161,7 @@
           confirm_password: this.confirm_password,
         };
         this.$http
-            .post('http://112.74.113.75:8843/user/add', prom)
+            .post(this.baseHttp+'/user/add', prom)
           .then(res => {
               if (res.data.code == 0) {
                 this.$notify({

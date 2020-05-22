@@ -35,7 +35,8 @@ export default {
             param: {
                 username: '',
                 password: '',
-            }
+            },
+            baseHttp: 'http://127.0.0.1:8888/'
         };
     },
     methods: {
@@ -54,7 +55,7 @@ export default {
                 passWord: this.getRsaCode(this.param.password),
                 };
                 this.$http
-                .post('http://112.74.113.75:8888/admin/sys/login', prom)
+                .post(this.baseHttp+'/admin/sys/login', prom)
                 .then(response => {
                     if (response.data.code != 0) {
                         this.$message.error(response.data.msg);

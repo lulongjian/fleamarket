@@ -213,7 +213,7 @@
         currentPage: 1,
         pagesize: 10,
         pageCount: [],
-        http: "http://112.74.113.75:8843",
+        baseHttp: "http://127.0.0.1:8843",
         pkey: '',
         total: 0,
         tel: '',
@@ -275,7 +275,7 @@
               this.$message.error("斌能为空，请输入内容")
             } else {
               this.$http
-                .post('http://112.74.113.75:8843/message/addMessage', {
+                .post(this.baseHttp+'/message/addMessage', {
                   pId: id,
                   text: value,
                   name: sessionStorage.getItem("user")
@@ -319,7 +319,7 @@
             //商品详情加入购物车
             var userId = sessionStorage.getItem("userId");
             this.$http
-              .post('http://112.74.113.75:8843/car/addCar', {
+              .post(this.baseHttp+'/car/addCar', {
               productId: id,
               userId: userId
             })
@@ -362,7 +362,7 @@
           /**
            * 检测是否已存在购物车中
            */
-            .post('http://112.74.113.75:8843/car/addCar', {
+            .post(this.baseHttp+'/car/addCar', {
               productId: id,
               userId: userId
             })
@@ -442,7 +442,7 @@
           /**
            * 进来查询列表的
            */
-          url: 'http://112.74.113.75:8843/product/productList',
+          url: this.baseHttp+'/product/productList',
           method: 'post',
           data: pagehomt
         }).then(res => {
@@ -467,7 +467,7 @@
       flagF(id, userId, count) {
         this.$store.commit('decrementF')
         this.$http
-          .post('http://112.74.113.75:8843/message/messageList', {
+          .post(this.baseHttp+'/message/messageList', {
             page: 1,
             number: 1000,
             pId: id
@@ -496,7 +496,7 @@
             /**
              * 搜索框获取
              */
-            url: 'http://112.74.113.75:8843/product/productList',
+            url: this.baseHttp+'/product/productList',
             method: 'post',
             data: pagehomt
           }).then(res => {
@@ -527,7 +527,7 @@
             /**
              * 分类/排序搜索
              */
-            url: 'http://112.74.113.75:8843/product/productList',
+            url: this.baseHttp+'/product/productList',
             method: 'post',
             data: pagehomt
           }).then(res => {

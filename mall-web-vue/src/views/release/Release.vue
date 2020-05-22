@@ -8,7 +8,7 @@
             <div style="padding-left: 95px">
             <el-upload
               class="avatar-uploader"
-              action="http://112.74.113.75:8843/sys/uploadImg"
+              action="http://127.0.0.1:8843/sys/uploadImg"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
@@ -62,6 +62,7 @@ export default {
 	name: "Release",
 	data () {
 		return {
+      baseHttp: "http://127.0.0.1:8843",
       imageUrl: '',
       dbimgUrl:'',
       title:'',
@@ -107,7 +108,7 @@ export default {
     },
     sunm(){
       this.$http
-       .put('http://112.74.113.75:8843/product/addProduct',{
+       .put(this.baseHttp+'/product/addProduct',{
          imgUrl:this.dbimgUrl,
          title:this.title,
          oldPrice:this.bprice,

@@ -229,6 +229,7 @@
                     pageIndex: 1,
                     pageSize: 10
                 },
+                baseHttp: 'http://127.0.0.1:8888/',
                 selectValue: false,
                 UserTableData: [],
                 multipleSelection: [],
@@ -251,8 +252,7 @@
                     }],
                 addlUserDialog: false,
                 category1: null,
-                category2: null,
-                baseURL: 'http://112.74.113.75:8888'
+                category2: null
             }
         },
         methods: {
@@ -305,7 +305,7 @@
                 category2: this.category2
             };
             this.$http
-                .post('http://112.74.113.75:8888/admin/account/getAccountRecord', prom)
+                .post(this.baseHttp+'/admin/account/getAccountRecord', prom)
             .then(response => {
                 if(response.data.code == 0){
                     this.UserTableData = response.data.data;
@@ -332,7 +332,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/deleteUser/'+id)
+                    .get(this.baseHttp+'/admin/user/deleteUser/'+id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);

@@ -8,7 +8,7 @@ axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
 export default function request(config) {
 			// 1.创建axios的实例
 			const instence = axios.create({
-				baseURL: 'http://112.74.113.75:8843',
+				baseURL: 'http://127.0.0.1:8843',
 				// timeout: 5000,
 				// // responseType: 'json',
 				// dataType: 'json',

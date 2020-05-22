@@ -147,7 +147,7 @@ export default {
       datas:{},
       direction:'ttb',
       close:true,
-      http: "http://112.74.113.75:8843",
+      baseHttp: "http://127.0.0.1:8843",
       sellerOrder: null
 		}
 	},
@@ -159,7 +159,7 @@ export default {
       this.drawer = true
       //发送后台请求获取数据
       this.$http
-        .get('http://112.74.113.75:8843/product/findProductById/'+productId+'',{
+        .get(this.baseHttp+'/product/findProductById/'+productId+'',{
         })
         .then(response => {
           if(response.data.code != 0){
@@ -186,7 +186,7 @@ export default {
       }).then(() => {
         //发送后台请求获取数据
       this.$http
-      .post('http://112.74.113.75:8843/order/enterOrder',{
+      .post(this.baseHttp+'/order/enterOrder',{
         id: id
       })
         .then(response => {
@@ -209,7 +209,7 @@ export default {
       }).then(() => {
         //发送后台请求获取数据
       this.$http
-      .post('http://112.74.113.75:8843/order/setOutOrder',{
+      .post(this.baseHttp+'/order/setOutOrder',{
         id: id
       })
         .then(response => {
@@ -234,7 +234,7 @@ export default {
         /**
          * 获取我的订单列表
          */
-          .post('http://112.74.113.75:8843/order/buyList', {
+          .post(this.baseHttp+'/order/buyList', {
             userId: sessionStorage.getItem("userId")
           })
           .then(response => {
@@ -244,7 +244,7 @@ export default {
            * 获取我 的出售订单列表
            */
           this.$http
-          .post('http://112.74.113.75:8843/order/sellerList', {
+          .post(this.baseHttp+'/order/sellerList', {
             userId: sessionStorage.getItem("userId")
           })
           .then(response => {
@@ -258,7 +258,7 @@ export default {
         /**
          * 获取我的订单列表
          */
-          .post('http://112.74.113.75:8843/order/buyList', {
+          .post(this.baseHttp+'/order/buyList', {
             userId: sessionStorage.getItem("userId")
           })
           .then(response => {
@@ -268,7 +268,7 @@ export default {
            * 获取我 的出售订单列表
            */
           this.$http
-          .post('http://112.74.113.75:8843/order/sellerList', {
+          .post(this.baseHttp+'/order/sellerList', {
             userId: sessionStorage.getItem("userId")
           })
           .then(response => {
@@ -283,7 +283,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http
-          .post('http://112.74.113.75:8843/order/deleteOrder', {
+          .post(this.baseHttp+'/order/deleteOrder', {
             orderId: orderId,
             userId: sessionStorage.getItem("userId")
           })

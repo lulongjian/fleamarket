@@ -254,7 +254,7 @@
                     <div style="padding-left: 95px">
                     <el-upload
                       class="avatar-uploader"
-                      action="http://112.74.113.75:8843/sys/uploadImg"
+                      action="http://127.0.0.1:8843/sys/uploadImg"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
                       :before-upload="beforeAvatarUpload">
@@ -397,6 +397,7 @@
     name: 'TopBar',
     data() {
       return {
+        baseHttp: "http://127.0.0.1:8843",
         imageUrl: '',
         dbimgUrl:'',
         Acolor: '',
@@ -430,7 +431,6 @@
         address: [],
         addr: [],
         addOrUpdate: '',
-        http: "http://127.0.01:8843",
         msg: [],
         pname:[],
         productList:[],
@@ -474,25 +474,6 @@
         }
         return isJPG && isLt2M;
       },
-      del(id){
-        this.$confirm('此操作将永久删除此留言信息，是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http
-            .post('https://fleamarket.fun:8843/message/delete',{
-              id:id,
-              username:sessionStorage.getItem("user")
-            })
-            .then(response=>{
-              this.$message.success(response.data.msg)
-              setTimeout(function () {
-                location.reload();
-              }, 1000)
-            })
-        })
-      },
       /**
        * 删除商品
        */
@@ -503,7 +484,7 @@
           type: 'warning'
         }).then(() => {
           this.$http
-            .post('http://112.74.113.75:8843/product/delete',{
+            .post(this.baseHttp+'/product/delete',{
               productId:id,
               userId:sessionStorage.getItem("userId")
             })
@@ -522,7 +503,7 @@
         this.updateProductCenterDialogVisible = true
         //查询商品的信息
         this.$http
-          .post('http://112.74.113.75:8843/product/findProductById',{
+          .post(this.baseHttp+'/product/findProductById',{
             id: id
           })
           .then(response=>{
@@ -536,7 +517,7 @@
        */
       updateProduct(){
         this.$http
-        .post('http://112.74.113.75:8843/product/updateProduct',{
+        .post(this.baseHttp+'/product/updateProduct',{
           id:this.productList.id,
           imgUrl:this.dbimgUrl,
           title:this.productList.title,
@@ -632,7 +613,7 @@
        */
       myproduct() {
         this.$http
-          .post('http://112.74.113.75:8843/product/productListByUser', {
+          .post(this.baseHttp+'/product/productListByUser', {
             page: 1,
             number: 1000,
             userId: sessionStorage.getItem("userId")
@@ -648,7 +629,7 @@
       myCenter() {
         this.myCenterDialogVisible = true
         this.$http
-          .post('http://112.74.113.75:8843/user/findUser', {
+          .post(this.baseHttp+'/user/findUser', {
             page: 1,
             number: 10000,
             userId: sessionStorage.getItem("userId")
@@ -667,7 +648,7 @@
           type: 'warning'
         }).then(() => {
            this.$http
-          .put('http://112.74.113.75:8843/user/updateUser',{
+          .put(this.baseHttp+'/user/updateUser',{
             id:id,
             email:this.loginUser.email,
             phone:this.loginUser.phone
@@ -690,7 +671,7 @@
       myAccount(){
         this.accountCenterDialogVisible = true
         this.$http
-          .post('http://112.74.113.75:8843/account/myAccount', {
+          .post(this.baseHttp+'/account/myAccount', {
             page: 1,
             number: 10000,
             userId: sessionStorage.getItem("userId")
@@ -711,7 +692,7 @@
        */
       addBalance(id){
           this.$http
-          .post('http://112.74.113.75:8843/account/addAccountByUserId', {
+          .post(this.baseHttp+'/account/addAccountByUserId', {
             userId: sessionStorage.getItem("userId"),
             money:this.addMoney,
             type: '3'
@@ -734,7 +715,7 @@
        */
       getBalance(id){
           this.$http
-          .post('http://112.74.113.75:8843/account/addAccountByUserId', {
+          .post(this.baseHttp+'/account/addAccountByUserId', {
             userId: sessionStorage.getItem("userId"),
             money:this.addMoney,
             type: '4'
@@ -761,7 +742,7 @@
       myadds(){
         this.addrCenterDialogVisible = true;
         this.$http
-          .post('http://112.74.113.75:8843/address/list', {
+          .post(this.baseHttp+'/address/list', {
             page: 1,
             number: 10000,
             userId: sessionStorage.getItem("userId")
@@ -775,7 +756,7 @@
        */
       deleteAddress(id){
         this.$http
-          .post('http://112.74.113.75:8843/address/deleteByAddressId', {
+          .post(this.baseHttp+'/address/deleteByAddressId', {
             page: 1,
             number: 10000,
             addressId: id
@@ -794,7 +775,7 @@
         this.addOrUpdate = '修改';
         this.updateAddressDialogVisible = true;
         this.$http
-          .post('http://112.74.113.75:8843/address/findAddressById',{
+          .post(this.baseHttp+'/address/findAddressById',{
             addressId: id
           })
           .then(response =>{
@@ -807,7 +788,7 @@
       UpdateAddress(){
         this.updateAddressDialogVisible = true;
         this.$http
-          .post('http://112.74.113.75:8843/address/addOrUpdateAddressById',{
+          .post(this.baseHttp+'/address/addOrUpdateAddressById',{
             id: this.addr.id,
             userName: this.addr.userName,
             userPhone: this.addr.userPhone,

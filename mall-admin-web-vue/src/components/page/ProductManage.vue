@@ -252,6 +252,7 @@
                     pageIndex: 1,
                     pageSize: 10
                 },
+                baseHttp: 'http://127.0.0.1:8888/',
                 selectValue: false,
                 UserTableData: [],
                 multipleSelection: [],
@@ -324,7 +325,7 @@
                 status: this.status
             };
             this.$http
-                .post('http://112.74.113.75:8888/admin/product/getProduct', prom)
+                .post(this.baseHttp+'/admin/product/getProduct', prom)
             .then(response => {
                 this.UserTableData = response.data.data;
                 this.pageTotal = response.data.count;
@@ -336,47 +337,6 @@
         userSearch() {
             this.$set(this.query, 'pageIndex', 1);
             this.getData();
-        },
-        // 删除单个用户
-        userDelete(index, row, id) {
-            // 二次确认删除
-            this.$confirm('确定要冻结吗？', '提示', {
-                type: 'warning'
-            })
-            .then(() => {
-                this.$http
-                    .get('http://112.74.113.75:8888/admin/user/deleteUser/'+id)
-                .then(response => {
-                    if(response.data.code == 0){
-                        this.$message.success(response.data.msg);
-                        this.UserTableData.splice(index, 1);
-                    }else{
-                        this.$message.error(response.data.msg);
-                    }
-                })
-                
-            })
-            .catch(() => {});
-        },
-        //解冻单个用户
-        userReset(index, row, id){
-            this.$confirm('确定要解冻该用户吗？', '提示', {
-                type: 'warning'
-            })
-            .then(() => {
-                this.$http
-                    .get('http://112.74.113.75:8888/admin/user/resetUser/'+id)
-                .then(response => {
-                    if(response.data.code == 0){
-                        this.$message.success(response.data.msg);
-                        this.UserTableData.splice(index, 1);
-                    }else{
-                        this.$message.error(response.data.msg);
-                    }
-                })
-                
-            })
-            .catch(() => {});
         },
         // 多选操作
         handleSelectionChange(val) {
@@ -393,7 +353,7 @@
                 productIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .delete('http://112.74.113.75:8888/admin/product/deProducts/'+productIds)
+                .delete(this.baseHttp+'/admin/product/deProducts/'+productIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`下架了商品 ${str} 共${length}个商品`);
@@ -416,7 +376,7 @@
                 productIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .get('http://112.74.113.75:8888/admin/product/upProducts/'+productIds)
+                .get(this.baseHttp+'/admin/product/upProducts/'+productIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`上架了商品 ${str} 共${length}个商品`);
@@ -439,7 +399,7 @@
                 userIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .get('http://112.74.113.75:8888/admin/user/authUser/'+userIds)
+                .get(this.baseHttp+'/admin/user/authUser/'+userIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`授权了用户 ${str} 共${length}个用户`);
@@ -471,7 +431,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/product/upProduct/'+this.form.id)
+                    .get(this.baseHttp+'/admin/product/upProduct/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.title+"---"+response.data.msg);
@@ -494,7 +454,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/product/deProduct/'+this.form.id)
+                    .get(this.baseHttp+'/admin/product/deProduct/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.title+"---"+response.data.msg);
@@ -517,7 +477,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/passwordReset/'+this.form.id)
+                    .get(this.baseHttp+'/admin/user/passwordReset/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.name+""+response.data.msg);
@@ -528,56 +488,6 @@
                 
             })
             .catch(() => {});
-        },
-        //新增或更新用户信息
-        saveEdit() {
-            let prom = {
-                id: this.form.id,
-                sno: this.form.sno,
-                name: this.form.name,
-                phone: this.form.phone,
-                email: this.form.email,
-                role: this.form.role[0]
-            };
-            let addProm = {
-                sno: this.form.sno,
-                name: this.form.name,
-                phone: this.form.phone,
-                email: this.form.email,
-                role: this.form.role[0]
-            };
-            if(this.editVisible){
-                //更新
-                this.$http
-                .post('http://112.74.113.75:8888/admin/user/updateUser',prom)
-                .then(response => {
-                    if(response.data.code == 0){
-                        this.$message.success(response.data.msg);
-                        this.editVisible = false;
-                        this.$set(this.UserTableData, this.idx, this.form);
-                    }else{
-                        this.$message.error(response.data.msg);
-                        //刷新table
-                        this.getData();
-                    }
-                })
-            }else{
-                //新增
-                this.$http
-                .post('http://112.74.113.75:8888/admin/user/addUser',addProm)
-                .then(response => {
-                    if(response.data.code == 0){
-                        this.$message.success(response.data.msg);
-                        //刷新table
-                        this.getData();
-                        //关闭窗口
-                        this.addlUserDialog = false
-                    }else{
-                        this.$message.error(response.data.msg);
-                    }
-                })
-            }
-            
         },
         // 分页导航
         handlePageChange(val) {

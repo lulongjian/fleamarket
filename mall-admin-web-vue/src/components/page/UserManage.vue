@@ -400,6 +400,7 @@
                     pageIndex: 1,
                     pageSize: 10
                 },
+                baseHttp: 'http://127.0.0.1:8888/',
                 selectValue: false,
                 UserTableData: [],
                 multipleSelection: [],
@@ -470,7 +471,7 @@
                 permission: this.permission
             };
             this.$http
-                .post('http://112.74.113.75:8888/admin/user/getUser', prom)
+                .post(this.baseHttp+'/admin/user/getUser', prom)
             .then(response => {
                 this.UserTableData = response.data.data;
                 this.pageTotal = response.data.count;
@@ -491,7 +492,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/deleteUser/'+id)
+                    .get(this.baseHttp+'/admin/user/deleteUser/'+id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -511,7 +512,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/resetUser/'+id)
+                    .get(this.baseHttp+'/admin/user/resetUser/'+id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -539,7 +540,7 @@
                 userIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .delete('http://112.74.113.75:8888/admin/user/deleteUser/'+userIds)
+                .delete(this.baseHttp+'/admin/user/deleteUser/'+userIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`冻结了用户 ${str} 共${length}个用户`);
@@ -562,7 +563,7 @@
                 userIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .get('http://112.74.113.75:8888/admin/user/authUser/'+userIds)
+                .get(this.baseHttp+'/admin/user/authUser/'+userIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`授权了用户 ${str} 共${length}个用户`);
@@ -594,7 +595,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/getPermission/'+this.form.id)
+                    .get(this.baseHttp+'/admin/user/getPermission/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.name+""+response.data.msg);
@@ -617,7 +618,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/passwordReset/'+this.form.id)
+                    .get(this.baseHttp+'/admin/user/passwordReset/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.name+""+response.data.msg);
@@ -649,7 +650,7 @@
             if(this.editVisible){
                 //更新
                 this.$http
-                .post('http://112.74.113.75:8888/admin/user/updateUser',prom)
+                .post(this.baseHttp+'/admin/user/updateUser',prom)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -664,7 +665,7 @@
             }else{
                 //新增
                 this.$http
-                .post('http://112.74.113.75:8888/admin/user/addUser',addProm)
+                .post(this.baseHttp+'/admin/user/addUser',addProm)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);

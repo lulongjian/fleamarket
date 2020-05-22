@@ -348,6 +348,7 @@
                     pageIndex: 1,
                     pageSize: 10
                 },
+                baseHttp: 'http://127.0.0.1:8888/',
                 selectValue: false,
                 UserTableData: [],
                 multipleSelection: [],
@@ -446,7 +447,7 @@
                 status: this.permission,
             };
             this.$http
-                .post('http://112.74.113.75:8888/admin/order/getOrder', prom)
+                .post(this.baseHttp+'/admin/order/getOrder', prom)
             .then(response => {
                 if(response.data.code === 0){
                     this.UserTableData = response.data.data;
@@ -473,7 +474,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/order/delete/'+id)
+                    .get(this.baseHttp+'/admin/order/delete/'+id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -493,7 +494,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/resetUser/'+id)
+                    .get(this.baseHttp+'/admin/user/resetUser/'+id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -521,7 +522,7 @@
                 orderIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .delete('http://112.74.113.75:8888/admin/order/deleteList/'+orderIds)
+                .delete(this.baseHttp+'/admin/order/deleteList/'+orderIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`取消了订单 ${str} 共${length}笔`);
@@ -544,7 +545,7 @@
                 userIds += this.multipleSelection[i].id + ',';
             }
             this.$http
-                .get('http://112.74.113.75:8888/admin/user/authUser/'+userIds)
+                .get(this.baseHttp+'/admin/user/authUser/'+userIds)
             .then(response => {
                 if(response.data.code == 0){
                     this.$message.success(`授权了用户 ${str} 共${length}个用户`);
@@ -576,7 +577,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/getPermission/'+this.form.id)
+                    .get(this.baseHttp+'/admin/user/getPermission/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.name+""+response.data.msg);
@@ -599,7 +600,7 @@
             })
             .then(() => {
                 this.$http
-                    .get('http://112.74.113.75:8888/admin/user/passwordReset/'+this.form.id)
+                    .get(this.baseHttp+'/admin/user/passwordReset/'+this.form.id)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(this.form.name+""+response.data.msg);
@@ -631,7 +632,7 @@
             if(this.editVisible){
                 //更新
                 this.$http
-                .post('http://112.74.113.75:8888/admin/user/updateUser',prom)
+                .post(this.baseHttp+'/admin/user/updateUser',prom)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
@@ -646,7 +647,7 @@
             }else{
                 //新增
                 this.$http
-                .post('http://112.74.113.75:8888/admin/user/addUser',addProm)
+                .post(this.baseHttp+'/admin/user/addUser',addProm)
                 .then(response => {
                     if(response.data.code == 0){
                         this.$message.success(response.data.msg);
