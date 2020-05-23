@@ -349,7 +349,7 @@
             let productIds = '';
             this.delList = this.delList.concat(this.multipleSelection);
             for (let i = 0; i < length; i++) {
-                str += this.multipleSelection[i].name + ' ';
+                str += this.multipleSelection[i].title + ' ';
                 productIds += this.multipleSelection[i].id + ',';
             }
             this.$http
@@ -372,7 +372,7 @@
             let productIds = '';
             this.delList = this.delList.concat(this.multipleSelection);
             for (let i = 0; i < length; i++) {
-                str += this.multipleSelection[i].name + ' ';
+                str += this.multipleSelection[i].title + ' ';
                 productIds += this.multipleSelection[i].id + ',';
             }
             this.$http
@@ -387,40 +387,6 @@
                 }
             })
             this.multipleSelection = [];
-        },
-        //多选授权
-        permissionAllSelection(){
-            const length = this.multipleSelection.length;
-            let str = '';
-            let userIds = '';
-            this.delList = this.delList.concat(this.multipleSelection);
-            for (let i = 0; i < length; i++) {
-                str += this.multipleSelection[i].name + ' ';
-                userIds += this.multipleSelection[i].id + ',';
-            }
-            this.$http
-                .get(this.baseHttp+'/admin/user/authUser/'+userIds)
-            .then(response => {
-                if(response.data.code == 0){
-                    this.$message.success(`授权了用户 ${str} 共${length}个用户`);
-                    //刷新table
-                    this.getData();
-                }else{
-                    this.$message.error(response.data.msg);
-                }
-            })
-            this.multipleSelection = [];
-        },
-        //打开添加用户界面
-        openAddlUserDialog(){
-            this.form = {role:'普通用户'}
-            this.addlUserDialog = true
-        },
-        //打开用户编辑页面
-        handleEdit(index, row) {
-            this.idx = index;
-            this.form = row;
-            this.editVisible = true;
         },
         // 上架商品
         upProduct(index,row){
@@ -460,27 +426,6 @@
                         this.$message.success(this.form.title+"---"+response.data.msg);
                         //刷新table
                         this.getData();
-                    }else{
-                        this.$message.error(response.data.msg);
-                    }
-                })
-                
-            })
-            .catch(() => {});
-        },
-        //重置密码
-        passwordEdit(index,row){
-            this.idx = index;
-            this.form = row;
-            this.$confirm('确定要重置密码吗？', '提示', {
-                type: 'warning'
-            })
-            .then(() => {
-                this.$http
-                    .get(this.baseHttp+'/admin/user/passwordReset/'+this.form.id)
-                .then(response => {
-                    if(response.data.code == 0){
-                        this.$message.success(this.form.name+""+response.data.msg);
                     }else{
                         this.$message.error(response.data.msg);
                     }
