@@ -1,2 +1,3 @@
 # fleamarket
-1321321
+
+基于springboot+vue的校园二手交易平台                          
