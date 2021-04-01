@@ -7,6 +7,7 @@ import com.example.common.utils.redis.RedisUtils;
 import com.example.mall.dao.UserMapper;
 import com.example.mall.domain.UserDO;
 import com.example.mall.service.UserService;
+import com.example.mall.utils.EmailCodeMapUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private RedisUtils redisUtils;
+//	@Autowired
+//	private RedisUtils redisUtils;
 
 	/**
 	 * 用户注册
@@ -33,13 +34,13 @@ public class UserController {
 	public JsonModel login(UserDO userDO, String code){
 		JsonModel jsonModel = new JsonModel();
 		//判断验证码是否正确/或者过时
-		System.out.println(redisUtils.get(userDO.getEmail()));
-		if(redisUtils.get(userDO.getEmail()) == null){
+//		System.out.println(EmailCodeMapUtil.emailCodeMap.get(userDO.getEmail()));
+		if(EmailCodeMapUtil.emailCodeMap.get(userDO.getEmail()) == null){
 			jsonModel.setCode(1);
 			jsonModel.setMsg("验证码已过时请重新获取");
 			return jsonModel;
 		}
-		if(redisUtils.get(userDO.getEmail()) != null && !redisUtils.get(userDO.getEmail()).equals(code)){
+		if(EmailCodeMapUtil.emailCodeMap.get(userDO.getEmail()) != null && !EmailCodeMapUtil.emailCodeMap.get(userDO.getEmail()).equals(code)){
 			jsonModel.setCode(1);
 			jsonModel.setMsg("验证码有误，请重新输入");
 			return jsonModel;
@@ -64,12 +65,12 @@ public class UserController {
 			return jsonModel;
 		}
 		//判断验证码是否正确/或者过时
-		if(redisUtils.get(email) == null){
+		if(EmailCodeMapUtil.emailCodeMap.get(email) == null){
 			jsonModel.setCode(1);
 			jsonModel.setMsg("验证码已过时请重新获取");
 			return jsonModel;
 		}
-		if(redisUtils.get(email) != null && !redisUtils.get(email).equals(code)){
+		if(EmailCodeMapUtil.emailCodeMap.get(email) != null && !EmailCodeMapUtil.emailCodeMap.get(email).equals(code)){
 			jsonModel.setCode(1);
 			jsonModel.setMsg("验证码有误，请重新输入");
 			return jsonModel;

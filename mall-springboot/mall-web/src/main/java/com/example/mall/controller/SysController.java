@@ -6,6 +6,7 @@ import com.example.common.utils.email.VerifyCodeUtil;
 import com.example.common.utils.redis.RedisUtils;
 import com.example.mall.domain.UserDO;
 import com.example.mall.service.UserService;
+import com.example.mall.utils.EmailCodeMapUtil;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,9 @@ public class SysController {
 			SendmailUtil.sendEmail(email, emailTitle, emailContent);
 			jsonModel.setMsg("验证码发送成功，请注意查收，如果长时间未收到，请重新获取");
 			//写进redis缓存
-			redisUtils.setEmailCode(email,verifyCode);
+//			redisUtils.setEmailCode(email,verifyCode);
+			//todo 改成写进map,临时使用
+			EmailCodeMapUtil.emailCodeMap.put(email, verifyCode);
 		} catch (Exception e) {
 			jsonModel.setCode(1);
 			jsonModel.setMsg(e.getMessage());
@@ -100,7 +103,9 @@ public class SysController {
 			SendmailUtil.sendEmail(email, emailTitle, emailContent);
 			jsonModel.setMsg("验证码发送成功，请注意查收，如果长时间未收到，请重新获取");
 			//写进redis缓存
-			redisUtils.setEmailCode(email,verifyCode);
+//			redisUtils.setEmailCode(email,verifyCode);
+			//todo 改成写进map,临时使用
+			EmailCodeMapUtil.emailCodeMap.put(email, verifyCode);
 		} catch (Exception e) {
 			jsonModel.setCode(1);
 			jsonModel.setMsg(e.getMessage());
